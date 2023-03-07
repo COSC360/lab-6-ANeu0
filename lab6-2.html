@@ -11,8 +11,26 @@
   <p id="time_two"></p>
 
   <!-- Add button and table here -->
+   <button id="btnGetCityInfo">Get City</button>
+   <table id="CityTable"/>
+    <script>
+        $("#btnGetCityInfo").on("click", function () {
+            $("#CityTable").empty();
+            var CityInfo = $.getJSON("http://www.randyconnolly.com/funwebdev/services/travel/cities.php", function (data) {
+                var tHeader = $("<tr><th>id</th><th>name</th><th>iso</th><th>latitude</th><th>longitude</th><th>population</th><th>elevation</th></tr>");
+                var tbody = $("<tbody></tbody>");
+                $.each(data,
+                    function (i, city) {
+                        if (city.id == "") {
+                            city.id = i;
+                        }
+                        var row = $("<tr><td>" + city.id + "</td><td>" + city.name + "</td><td>" + city.iso + "</td><td>" + city.latitude + "</td><td>" + city.longitude + "</td><td>" + city.population + "</td><td>" + city.elevation + "</td></tr>");
+                        tbody.append(row);
+                    });
+                $("#CityTable").append(tHeader,tbody)
+            })
+        })
 
-  <script>
   //set interval timers to trigger the refresh.  Here the callback function will
   //be called when the timer fires
   var var1 = setInterval(timer1, 1000);
